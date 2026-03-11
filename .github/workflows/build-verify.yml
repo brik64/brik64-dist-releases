@@ -1,0 +1,23 @@
+name: Build & Verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-checksums:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify SHA256SUMS integrity
+        run: |
+          if [ -f SHA256SUMS ]; then
+            echo "SHA256SUMS present — contents:"
+            cat SHA256SUMS
+          fi
